@@ -163,32 +163,32 @@ export default function PatientDetail({ patientId, onBack, onDeleted }: PatientD
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       {/* Header */}
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-3">
         <button onClick={onBack} className="p-2 rounded-lg hover:bg-white transition-all">
           <ArrowLeft className="w-5 h-5 text-slate-600" />
         </button>
-        <div className="flex items-center gap-3 flex-1">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-slate-600 to-slate-700 flex items-center justify-center text-lg font-bold text-white">
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-slate-600 to-slate-700 flex items-center justify-center text-base sm:text-lg font-bold text-white flex-shrink-0">
             {patient.full_name[0]?.toUpperCase()}
           </div>
-          <div>
-            <h1 className="text-xl font-bold text-slate-800">{patient.full_name}</h1>
+          <div className="min-w-0">
+            <h1 className="text-lg sm:text-xl font-bold text-slate-800 truncate">{patient.full_name}</h1>
             <p className="text-sm text-slate-500">Kayıt: {formatDate(patient.created_at.slice(0, 10))}</p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-shrink-0">
           <button
             onClick={openEdit}
             className="flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-blue-600 border border-slate-200 hover:border-blue-300 rounded-lg px-3 py-2 transition-all"
           >
-            <Edit2 className="w-4 h-4" /> Düzenle
+            <Edit2 className="w-4 h-4" /> <span className="hidden sm:inline">Düzenle</span>
           </button>
           <button
             onClick={deletePatient}
             disabled={deleting}
             className="flex items-center gap-1.5 text-sm font-medium text-red-600 hover:text-red-700 border border-red-200 hover:border-red-300 rounded-lg px-3 py-2 transition-all disabled:opacity-50"
           >
-            <Trash2 className="w-4 h-4" /> Sil
+            <Trash2 className="w-4 h-4" /> <span className="hidden sm:inline">Sil</span>
           </button>
         </div>
       </div>
@@ -261,7 +261,7 @@ export default function PatientDetail({ patientId, onBack, onDeleted }: PatientD
           {/* Sessions per cycle */}
           {prpCycles.map((cycle, ci) => (
             <Card key={cycle.id} icon={<Droplet className="w-5 h-5" />} title={`PRP Döngüsü ${prpCycles.length > 1 ? ci + 1 : ''}`} color="emerald">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4 text-center">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-4 text-center">
                 <div className="bg-slate-50 rounded-lg py-2">
                   <p className="text-xs text-slate-500">Toplam Seans</p>
                   <p className="text-lg font-bold text-slate-800">{cycle.total_sessions}</p>
@@ -368,7 +368,7 @@ export default function PatientDetail({ patientId, onBack, onDeleted }: PatientD
       {/* Edit patient modal */}
       {editing && (
         <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setEditing(false)}>
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="p-5 border-b border-slate-100 flex items-center justify-between">
               <h3 className="font-semibold text-slate-800">Hastayı Düzenle</h3>
               <button onClick={() => setEditing(false)} className="text-slate-400 hover:text-slate-600">
@@ -456,7 +456,7 @@ function SessionRow({ session, patientName, patientPhone, onStatusChange, onResc
   const todaySession = session.status === 'scheduled' && isToday(session.scheduled_date);
 
   return (
-    <div className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${
+    <div className={`flex flex-wrap items-center gap-2 sm:gap-3 p-3 rounded-xl border transition-all ${
       completed ? 'border-emerald-200 bg-emerald-50/50' :
       cancelled ? 'border-red-200 bg-red-50/30' :
       overdue ? 'border-amber-200 bg-amber-50/30' :
@@ -500,7 +500,7 @@ function SessionRow({ session, patientName, patientPhone, onStatusChange, onResc
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-1.5 flex-shrink-0">
+      <div className="flex items-center gap-1 sm:gap-1.5 flex-shrink-0 ml-auto sm:ml-0">
         {!completed && !cancelled && patientPhone && (
           <a
             href={buildWhatsAppUrl(patientPhone, patientName)}
@@ -568,7 +568,7 @@ function Card({ icon, title, color, children }: {
     slate: 'bg-slate-100 text-slate-600',
   };
   return (
-    <div className={`bg-white rounded-2xl shadow-sm border ${colors[color]} p-5 space-y-4`}>
+    <div className={`bg-white rounded-2xl shadow-sm border ${colors[color]} p-3 sm:p-5 space-y-4`}>
       <div className="flex items-center gap-3">
         <div className={`w-10 h-10 rounded-xl ${iconColors[color]} flex items-center justify-center`}>
           {icon}
@@ -591,7 +591,7 @@ function InfoItem({ icon, label, value }: {
         <span className="text-slate-400">{icon}</span>
         {label}
       </p>
-      <p className="text-sm text-slate-800 bg-slate-50 rounded-lg px-3 py-2">{value}</p>
+      <p className="text-sm text-slate-800 bg-slate-50 rounded-lg px-3 py-2 break-words">{value}</p>
     </div>
   );
 }
@@ -603,7 +603,7 @@ function Modal({ title, onClose, children }: {
 }) {
   return (
     <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose}>
-      <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden" onClick={(e) => e.stopPropagation()}>
+      <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="p-5 border-b border-slate-100 flex items-center justify-between">
           <h3 className="font-semibold text-slate-800">{title}</h3>
           <button onClick={onClose} className="text-slate-400 hover:text-slate-600">

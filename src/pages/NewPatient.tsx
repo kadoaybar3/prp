@@ -169,7 +169,7 @@ export default function NewPatient({ onCreated }: NewPatientProps) {
 
         {/* Service Type */}
         <Section icon={<Sparkles className="w-5 h-5" />} title="Hizmet Türü" color="slate">
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
             <ServiceToggle
               active={serviceType === 'ht'}
               onClick={() => setServiceType('ht')}
@@ -314,7 +314,7 @@ export default function NewPatient({ onCreated }: NewPatientProps) {
             </Field>
 
             {/* Interval presets */}
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="text-xs text-slate-500">Hızlı seçim:</span>
               {intervalPresets.map((d) => (
                 <button
@@ -338,10 +338,6 @@ export default function NewPatient({ onCreated }: NewPatientProps) {
                 <Banknote className="w-4 h-4 text-emerald-600" />
                 <span className="text-sm text-emerald-700">
                   Toplam: <span className="font-bold">₺{parseFloat(prpTotalPrice).toLocaleString('tr-TR')}</span>
-                  {prpTotalSessions > 0 && (
-                    <span className="ml-2 text-emerald-600">
-                    </span>
-                  )}
                 </span>
               </div>
             )}
@@ -375,7 +371,7 @@ export default function NewPatient({ onCreated }: NewPatientProps) {
           <button
             type="submit"
             disabled={saving}
-            className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-medium px-6 py-3 rounded-xl shadow-lg shadow-blue-600/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-medium px-5 sm:px-6 py-3 rounded-xl shadow-lg shadow-blue-600/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? 'Kaydediliyor...' : 'Hastayı Kaydet'}
             {saving ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
@@ -448,7 +444,7 @@ function ServiceToggle({ active, onClick, label, color }: {
     <button
       type="button"
       onClick={onClick}
-      className={`flex flex-col items-center justify-center py-5 rounded-xl border-2 transition-all ${
+      className={`flex flex-col items-center justify-center py-3 sm:py-5 rounded-xl border-2 transition-all ${
         active ? activeColors[color] : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300'
       }`}
     >
