@@ -340,7 +340,6 @@ export default function NewPatient({ onCreated }: NewPatientProps) {
                   Toplam: <span className="font-bold">₺{parseFloat(prpTotalPrice).toLocaleString('tr-TR')}</span>
                   {prpTotalSessions > 0 && (
                     <span className="ml-2 text-emerald-600">
-                      (Seans başına ~₺{Math.round((parseFloat(prpTotalPrice) / prpTotalSessions) * 100) / 100})
                     </span>
                   )}
                 </span>
